@@ -12,6 +12,20 @@ defmodule BinTree do
   defstruct [:value, :left, :right]
 end
 
+defmodule BST do
+  @spec search(BinTree.t(), any()) :: BinTree.t()
+  def search(tree, value) do
+    zipper = Zipper.from_tree(tree)
+    cond do
+      value < zipper.focused.value ->
+        search(Zipper.to_tree(Zipper.left(zipper)), value)
+      value > zipper.focused.value -> 
+        search(Zipper.to_tree(Zipper.right(zipper)), value)
+      true
+    end
+  end
+end
+
 defimpl Inspect, for: BinTree do
   import Inspect.Algebra
 
