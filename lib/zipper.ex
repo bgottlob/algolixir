@@ -67,31 +67,23 @@ defmodule Zipper do
   @doc """
   Get the left child of the focus node, if any.
   """
-  @spec left(Zipper.t()) :: Zipper.t() | nil
+  @spec left(Zipper.t()) :: Zipper.t()
   def left(zipper) do
-    case zipper.focused.left do
-      nil -> nil
-      left ->
-        %Zipper{
-          focused: left,
-          path: [{:left, zipper.focused} | zipper.path]
-        }
-    end
+    %Zipper{
+      focused: zipper.focused.left,
+      path: [{:left, zipper.focused} | zipper.path]
+    }
   end
 
   @doc """
   Get the right child of the focus node, if any.
   """
-  @spec right(Zipper.t()) :: Zipper.t() | nil
+  @spec right(Zipper.t()) :: Zipper.t()
   def right(zipper) do
-    case zipper.focused.right do
-      nil -> nil
-      right ->
-        %Zipper{
-          focused: right,
-          path: [{:right, zipper.focused} | zipper.path]
-        }
-    end
+    %Zipper{
+      focused: zipper.focused.right,
+      path: [{:right, zipper.focused} | zipper.path]
+    }
   end
 
   @doc """
@@ -135,4 +127,16 @@ defmodule Zipper do
   def set_right(zipper, right) do
     %Zipper{zipper | focused: %BinTree{zipper.focused | right: right}}
   end
+
+  @spec in_order_traversal(Zipper.t()) :: Zipper.t()
+  def in_order_traversal(zipper) do
+    in_order_traversal(zipper, [])
+  end
+
+  #defp in_order_traversal(%Zipper{focused: nil}, path), do: List.flatten(path)
+  #defp in_order_traversal(zipper, path) do
+  #  path = [in_order_traversal(left(zipper), path) | path]
+  #  path = [zipper.focused.value | path]
+  #  path = [in_order_traversal(right(zipper), path) | path]
+  #end
 end

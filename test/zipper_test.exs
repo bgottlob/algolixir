@@ -22,7 +22,7 @@ defmodule ZipperTest do
   end
 
   test "dead end" do
-    assert t1() |> from_tree() |> left() |> left() == nil
+    assert (t1() |> from_tree() |> left() |> left()).focused == nil
   end
 
   test "tree from deep focus" do
