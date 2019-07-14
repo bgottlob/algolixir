@@ -12,6 +12,11 @@ defmodule ZipperTest do
   defp t4, do: bt(1, leaf(2), leaf(4))
   defp t5, do: bt(1, bt(2, nil, leaf(3)), bt(6, leaf(7), leaf(8)))
   defp t6, do: bt(1, bt(2, nil, leaf(5)), leaf(4))
+  defp bst1, do: bt(3, bt(2, leaf(1), nil), bt(4, nil, leaf(5)))
+
+  test "inorder traversal of a bst is the sorted list" do
+    assert bst1() |> from_tree() |> in_order_traversal() == [1,2,3,4,5]
+  end
 
   test "data is retained" do
     assert t1() |> from_tree() |> to_tree() == t1()

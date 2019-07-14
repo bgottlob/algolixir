@@ -129,14 +129,12 @@ defmodule Zipper do
   end
 
   @spec in_order_traversal(Zipper.t()) :: Zipper.t()
+  def in_order_traversal(%Zipper{focused: nil}), do: []
   def in_order_traversal(zipper) do
-    in_order_traversal(zipper, [])
+    List.flatten([
+      in_order_traversal(left(zipper)),
+      zipper.focused.value,
+      in_order_traversal(right(zipper))
+    ])
   end
-
-  #defp in_order_traversal(%Zipper{focused: nil}, path), do: List.flatten(path)
-  #defp in_order_traversal(zipper, path) do
-  #  path = [in_order_traversal(left(zipper), path) | path]
-  #  path = [zipper.focused.value | path]
-  #  path = [in_order_traversal(right(zipper), path) | path]
-  #end
 end
